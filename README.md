@@ -111,11 +111,11 @@ Get info.:
 - Get image from `nginx` deployment on `orcrist` namespace.
 - Create a `port-forward` to access `nginx` pod on `orcrist` namespace.
 
-## Extra Challenge 2: Pulumi
+## Extra Challenge 2: Terraform
 
 > _NOTE: Create `challenge-extra-2` directory._
 
-- Use [Pulumi](https://pulumi.com) to provision the Kubernetes cluster with the same resources as in `challenge-extra-1`.
+- Use [Terraform](https://www.terraform.io/) to provision the Kubernetes cluster with the same resources as in `challenge-extra-1`.
 - Upload all files when you've finished the task.
 
 ## Extra Challenge 3: Test Ansible
