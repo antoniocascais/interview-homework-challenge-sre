@@ -1,0 +1,56 @@
+suite: test service
+templates:
+  - service.yaml
+tests:
+  - it: should be a Service
+    asserts:
+      - isKind:
+          of: Service
+
+  - it: should be ClusterIP by default
+    asserts:
+      - equal:
+          path: spec.type
+          value: ClusterIP
+
+  - it: should route to correct port
+    asserts:
+      - equal:
+          path: spec.ports[0].port
+          value: 8080
+      - equal:
+          path: spec.ports[0].targetPort
+          value: 8080
+
+  - it: should use correct protocol
+    asserts:
+      - equal:
+          path: spec.ports[0].protocol
+          value: TCP
+
+  - it: should have correct selector labels
+    asserts:
+      - equal:
+          path: spec.selector
+          value:
+            app.kubernetes.io/name: server-chart
+            app.kubernetes.io/instance: RELEASE-NAME
+
+  - it: should allow overriding service type
+    set:
+      service.type: NodePort
+    asserts:
+      - equal:
+          path: spec.type
+          value: NodePort
+
+  - it: should allow overriding port
+    set:
+      service.port: 9090
+    asserts:
+      - equal:
+          path: spec.ports[0].port
+          value: 9090
+      - equal:
+          path: spec.ports[0].targetPort
+          value: 9090

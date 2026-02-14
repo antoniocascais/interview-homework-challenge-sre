@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: chal3
+  tag: latest
+  pullPolicy: IfNotPresent
+
+containerName: server
+
+service:
+  type: ClusterIP
+  port: 8080
+  protocol: TCP
+
+resources: {}

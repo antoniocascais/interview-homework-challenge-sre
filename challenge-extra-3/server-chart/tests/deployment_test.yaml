@@ -1,0 +1,71 @@
+suite: test deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should be a Deployment
+    asserts:
+      - isKind:
+          of: Deployment
+
+  - it: should have correct replicas
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+
+  - it: should use the correct image
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "chal3:latest"
+
+  - it: should expose container port from values
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports[0].containerPort
+          value: 8080
+
+  - it: should use correct container name
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: server
+
+  - it: should have correct selector labels
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app.kubernetes.io/name: server-chart
+            app.kubernetes.io/instance: RELEASE-NAME
+
+  - it: should allow overriding replicas
+    set:
+      replicaCount: 3
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 3
+
+  - it: should allow overriding image
+    set:
+      image.repository: myimage
+      image.tag: "2.0"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "myimage:2.0"
+
+  - it: should render resources when set
+    set:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.cpu
+          value: 100m
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 128Mi
