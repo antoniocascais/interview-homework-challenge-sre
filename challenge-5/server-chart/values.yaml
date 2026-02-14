@@ -1,9 +1,15 @@
-# Challenge 5: Complete this values file
-#
-# Define values for:
-# - image: repository, tag, pullPolicy
-# - replicaCount
-# - service: type, port
-# - resources (optional)
-#
-# Hint: The Python server listens on port 8080
+replicaCount: 1
+
+image:
+  repository: chal3
+  tag: latest
+  pullPolicy: IfNotPresent
+
+containerName: server
+
+service:
+  type: ClusterIP
+  port: 8080
+  protocol: TCP
+
+resources: {}
